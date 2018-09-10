@@ -21,10 +21,16 @@ function editingStudent(state = {}, action){
     else
         return state
 }
+//reducers
+function authenticate(state = {loggedin: false}, action){
+    if(action.type=='AUTHENTICATED')
+        return {loggedin: true, access_token: action.payload}
+    return state
+}
 
 
 var centralState = combineReducers({
-   students, editingStudent
+   students, editingStudent, authenticate
 })
 
 var store = createStore(centralState, applyMiddleware(thunk))

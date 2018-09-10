@@ -2,13 +2,22 @@ import React from 'react'
 
 export default class List extends React.Component{
 
-    componentDidMount(){
-        fetch('http://rmit.chickenkiller.com:8080/students')
-        .then(res=>res.json())
-        .then(students=>{
-            this.props.dispatch({type: 'FETCH_STUDENT', payload: students})
-        })
+    constructor(){
+        super()
     }
+
+    componentDidMount(){
+        var access_token = localStorage.getItem('access_token')        
+        fetch(`http://localhost:8080/students?access_token=${access_token}`)
+            .catch(err=>{
+                console.log(err)
+            })
+            .then(res=>res.json())
+            .then(students=>{
+                this.props.dispatch({type: 'FETCH_STUDENT', payload: students})
+            })
+    }
+   
 
     render(){
         return(
@@ -16,6 +25,7 @@ export default class List extends React.Component{
                 <div className='panel panel-default'>
                     <div className='panel-heading'>Student List</div>
                     <div className='panel-body'>
+                   
                         <table className='table'>
                             <thead>
                                 <tr>
