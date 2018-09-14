@@ -51,10 +51,10 @@ export default class Search extends React.Component {
     }
     render() {
         let btnSearch = <button className="btn btn-default" onClick={this.onSearch.bind(this)}>
-            <i class="glyphicon glyphicon-search"></i>
+            <i className="glyphicon glyphicon-search"></i>
         </button>
         let btnClear = <button className="btn btn-default" onClick={this.onClear.bind(this)}>
-            <i class="glyphicon glyphicon-remove-circle"></i>
+            <i className="glyphicon glyphicon-remove-circle"></i>
         </button>
         return (
             <div>
