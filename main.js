@@ -37,8 +37,20 @@ function icds(state = [], action) {
         return state
 }
 
-function visitId(state = '', action) {
-    if (action.type == 'DIAGNOSE')
+function medicalServices(state = [], action) {
+    if (action.type == 'FETCH_MSS')
+        return action.payload
+    else
+        return state
+}
+
+function drugs(state = [], action) {
+    if (action.type == 'FETCH_DRUGS') return action.payload
+    else return state
+}
+
+function processingPatient(state = {visitId: '', prescriptionId: ''}, action) {
+    if (action.type == 'PROCESS_PATIENT')
         return action.payload
     else return state
 }
@@ -59,7 +71,8 @@ function authenticate(state = { loggedin: false }, action) {
 
 var centralState = combineReducers({
     patients, editedPatient, authenticate,
-    visits, icds, visitId
+    visits, icds, medicalServices, drugs,
+    processingPatient
 })
 
 var store = createStore(centralState, applyMiddleware(thunk))

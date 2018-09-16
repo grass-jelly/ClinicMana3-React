@@ -8,8 +8,8 @@ import Hello from './Hello.jsx'
 import About from './About.jsx'
 import { browserHistory } from 'react-router'
 import { BrowserRouter as Router, Switch, Link, Route } from 'react-router-dom'
-import Login from './Login.jsx';
-import DiagnoseForm from './DiagnoseForm.jsx';
+import Login from './Login.jsx'
+import ProcessForm from './ProcessForm.jsx'
 
 class App extends React.Component {
 
@@ -29,6 +29,33 @@ class App extends React.Component {
             })
     }
 
+    fetchMedicalServices() {
+        var access_token = localStorage.getItem('access_token')
+        fetch(`http://localhost:8080/medicalServices/?access_token=${access_token}`)
+            .catch(err => {
+                console.log(err)
+            })
+            .then(res => res.json())
+            .then(mss => {
+                this.props.dispatch({ type: 'FETCH_MSS', payload: mss })
+            })
+    }
+
+    fetchDrugs() {
+        var access_token = localStorage.getItem('access_token')
+        fetch(`http://localhost:8080/drugs/?access_token=${access_token}`)
+            .then(res => res.json())
+            .then(drugs => {
+                this.props.dispatch({ type: 'FETCH_DRUGS', payload: drugs })
+            })
+    }
+
+    componentDidMount() {
+        this.fetchIcds.bind(this)()
+        this.fetchMedicalServices.bind(this)()
+        this.fetchDrugs.bind(this)()
+    }
+
     render() {
 
         return (
@@ -40,7 +67,6 @@ class App extends React.Component {
                 <Router>
                     {this.props.authenticate.loggedin == true ?
                         <div>
-                            {this.fetchIcds.bind(this)()}
                             <ul>
                                 <li><Link to={'/About'}>About</Link></li>
                                 <li><Link to={'/Hello'}>Hello</Link></li>
@@ -67,15 +93,12 @@ class App extends React.Component {
                                 />
                                 <Route path='/Visits' render={() =>
                                     <div className='row'>
-                                        <div className='col-md-8'>
-                                            <VisitList access_token={this.props.authenticate.access_token} visits={this.props.visits} dispatch={this.props.dispatch} />
-                                        </div>
-
-                                        <div className='col-md-4'>
-                                            {this.props.visitId == '' ? 
-                                            <h1>Hello</h1>
-                                            :
-                                            <DiagnoseForm dispatch={this.props.dispatch} icds={this.props.icds} visitId={this.props.visitId} />
+                                        <div className='col-md-12'>
+                                            {this.props.processingPatient.prescriptionId == '' ?
+                                                <VisitList access_token={this.props.authenticate.access_token} visits={this.props.visits} dispatch={this.props.dispatch} />
+                                                : <ProcessForm dispatch={this.props.dispatch}
+                                                    drugs={this.props.drugs} icds={this.props.icds} medicalServices={this.props.medicalServices}
+                                                    processingPatient={this.props.processingPatient} />
                                             }
                                         </div>
                                     </div>
@@ -103,7 +126,10 @@ function mapStateToProps(centralState) {
         authenticate: centralState.authenticate,
         visits: centralState.visits,
         icds: centralState.icds,
-        visitId: centralState.visitId
+        medicalServices: centralState.medicalServices,
+        drugs: centralState.drugs,
+        processingPatient: centralState.processingPatient
+
     }
 }
 
