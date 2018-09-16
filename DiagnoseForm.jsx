@@ -4,7 +4,11 @@ import { runInThisContext } from 'vm';
 export default class DiagnoseForm extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { visit: { id: props.processingPatient.visitId }, diseases: [], diagnosed: false }
+        this.state = { visit: { id: props.diagnosingPatient.visitId }, diseases: [] }
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({visit: {id: newProps.diagnosingPatient.visitId}})
     }
 
     handleDiagnose(e) {
@@ -13,16 +17,15 @@ export default class DiagnoseForm extends React.Component {
     }
 
     validate() {
-        if (this.state.diseases.length == 0) return false
+        if (this.state.visit.id == '' || this.state.diseases.length == 0) return false
         return true
     }
 
     onDiagnose() {
         if (this.validate.bind(this)() == false) {
-            alert('Please choose a disease')
+            alert('Please select a visit then select a disease')
             return
         }
-        this.setState({ diagnosed: true })
         var access_token = localStorage.getItem('access_token')
         fetch(`http://localhost:8080/diagnoses?access_token=${access_token}`, {
             headers: {
@@ -36,6 +39,7 @@ export default class DiagnoseForm extends React.Component {
             .then(d => {
                 alert(`Diagnosis added (ID: ${d.id})! Disease IDs: ` + d.diseases.map(ds=>ds.id))
             })
+            .then(()=>this.props.dispatch({type: 'RESET'}))
     }
 
 
@@ -43,7 +47,7 @@ export default class DiagnoseForm extends React.Component {
         return (
             <div>
                 <div className='panel panel-warning'>
-                    <div className='panel-heading'>Diagnose Form</div>
+                    <div className='panel-heading'>Diagnose Form for VISIT #{this.state.visit.id} </div>
                     <div className='panel-body'>
                         <div className='form-group'>
                             <label>Mutiple select list (hold shift to select more than one):</label>
@@ -53,9 +57,7 @@ export default class DiagnoseForm extends React.Component {
 
                             </select>
                         </div>
-                        {this.state.diagnosed == false ?
                         <button className='btn btn-warning' onClick={this.onDiagnose.bind(this)}>Post</button>
-                    : <button className='btn btn-warning disabled' >Post</button>}
                     </div>
                 </div>
             </div>

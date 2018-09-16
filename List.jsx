@@ -19,14 +19,12 @@ export default class List extends React.Component {
     }
 
     onDelete(id){
-        console.log('delete '+id)
         var access_token = localStorage.getItem('access_token')
         if(!confirm('Do you want to delete?')) return
         var access_token = localStorage.getItem('access_token')
          fetch(`http://localhost:8080/patients/${id}?access_token=${access_token}`, {
              method: 'delete'
          })
-        //  .then(res=>res.json())
          .then(()=>this.props.dispatch({type: 'DELETE_PATIENT', payload: id}))
        }
 
@@ -43,6 +41,7 @@ export default class List extends React.Component {
                         <table className='table'>
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Name</th>
                                     <th>Date of Birth</th>
                                     <th>Gender</th>
@@ -54,6 +53,7 @@ export default class List extends React.Component {
                             <tbody>
                                 {this.props.patients.map(s =>
                                     <tr key={s.id}>
+                                        <td>{s.id}</td>
                                         <td>{s.name}</td>
                                         <td>{s.dateOfBirth}</td>
                                         <td>{s.gender}</td>

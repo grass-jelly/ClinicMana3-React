@@ -3,13 +3,17 @@ import { connect } from 'react-redux'
 import List from './List.jsx'
 import VisitList from './VisitList.jsx'
 import Search from './Search.jsx'
+import SearchVisits from './SearchVisits.jsx'
 import Form from './Form.jsx'
 import Hello from './Hello.jsx'
 import About from './About.jsx'
 import { browserHistory } from 'react-router'
 import { BrowserRouter as Router, Switch, Link, Route } from 'react-router-dom'
 import Login from './Login.jsx'
-import ProcessForm from './ProcessForm.jsx'
+import DiagnoseForm from './DiagnoseForm.jsx'
+import LabtestForm from './LabtestForm.jsx'
+import VisitForm from './VisitForm.jsx';
+import PrescribeForm from './PrescribeForm.jsx'
 
 class App extends React.Component {
 
@@ -92,16 +96,24 @@ class App extends React.Component {
                                 }
                                 />
                                 <Route path='/Visits' render={() =>
-                                    <div className='row'>
-                                        <div className='col-md-12'>
-                                            {this.props.processingPatient.prescriptionId == '' ?
+                                    <div>
+                                        <div className='row'>
+                                            <div className='col-md-8'>
                                                 <VisitList access_token={this.props.authenticate.access_token} visits={this.props.visits} dispatch={this.props.dispatch} />
-                                                : <ProcessForm dispatch={this.props.dispatch}
-                                                    drugs={this.props.drugs} icds={this.props.icds} medicalServices={this.props.medicalServices}
-                                                    processingPatient={this.props.processingPatient} />
-                                            }
+                                            </div>
+                                            <div className='col-md-4'>
+                                                <SearchVisits dispatch={this.props.dispatch} />
+                                                <div>
+                                                    {this.props.showingForm == 'visitForm' && <VisitForm patients={this.props.patients} dispatch={this.props.dispatch} editingVisit={this.props.editingVisit} />}
+                                                    {this.props.showingForm == 'diagnoseForm' &&  <DiagnoseForm dispatch={this.props.dispatch} icds={this.props.icds} diagnosingPatient={this.props.diagnosingPatient} />}
+                                                    {this.props.showingForm == 'labtestForm' && <LabtestForm dispatch={this.props.dispatch} medicalServices={this.props.medicalServices} orderingLabtest={this.props.orderingLabtest}/>}
+                                                    {this.props.showingForm == 'prescribeForm' && <PrescribeForm dispatch={this.props.dispatch} drugs={this.props.drugs} prescribing={this.props.prescribing}/>}
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
                                 }
                                 />
                             </Switch>
@@ -128,8 +140,11 @@ function mapStateToProps(centralState) {
         icds: centralState.icds,
         medicalServices: centralState.medicalServices,
         drugs: centralState.drugs,
-        processingPatient: centralState.processingPatient
-
+        diagnosingPatient: centralState.diagnosingPatient,
+        orderingLabtest: centralState.orderingLabtest,
+        prescribing: centralState.prescribing,
+        editingVisit: centralState.editingVisit,
+        showingForm: centralState.showingForm    
     }
 }
 

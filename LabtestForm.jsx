@@ -3,11 +3,15 @@ import React from 'react'
 export default class LabtestForm extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { visit: { id: props.processingPatient.visitId }, medicalServices: [], ordered: false }
+        this.state = { visit: { id: props.orderingLabtest.visitId }, medicalServices: [] }
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({ visit: { id: newProps.orderingLabtest.visitId } })
     }
 
     validate() {
-        if (this.state.medicalServices.length == 0) return false
+        if (this.state.visit.id == '' || this.state.medicalServices.length == 0) return false
         return true
     }
 
@@ -18,10 +22,10 @@ export default class LabtestForm extends React.Component {
 
     onSave() {
         if (this.validate.bind(this)() == false) {
-            alert('Please choose a test')
+            alert('Please select a visit then select a service')
             return
         }
-        this.setState({ordered: true})
+        this.setState({ ordered: true })
         var access_token = localStorage.getItem('access_token')
         fetch(`http://localhost:8080/labTests?access_token=${access_token}`, {
             headers: {
@@ -41,7 +45,7 @@ export default class LabtestForm extends React.Component {
     render() {
         return (
             <div className='panel panel-default'>
-                <div className='panel-heading'>Labtest Order Form</div>
+                <div className='panel-heading'>Labtest Order Form for VISIT #{this.state.visit.id}</div>
                 <div className='panel-body'>
                     <div className='form-group'>
                         <label>Mutiple select list (hold shift to select more than one):</label>
@@ -51,9 +55,7 @@ export default class LabtestForm extends React.Component {
 
                         </select>
                     </div>
-                    {this.state.ordered == false ?
-                        <button className='btn btn-default' onClick={this.onSave.bind(this)}>Post</button>
-                    : <button className='btn btn-default disabled' >Post</button>}
+                    <button className='btn btn-default' onClick={this.onSave.bind(this)}>Post</button>
                 </div>
             </div>
         )

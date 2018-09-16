@@ -80,12 +80,3 @@ export default class Search extends React.Component {
         )
     }
 }
-{/* <div className='form-group'>
-                            <label htmlFor="">By Name</label>
-                            <input type="text" name='name' value={this.state.name} className='form-control' onChange={this.handleChange.bind(this)} />
-                            <button className='btn btn-default' onClick={this.onSave.bind(this)}>Search</button>
-                        </div>
-                        <div className='form-group'>
-                            <label htmlFor="">By Date of Birth</label>
-                            <input type="text" name='dateOfBirth' value={this.state.dateOfBirth} className='form-control' onChange={this.handleChange.bind(this)} />
-                        </div> */}

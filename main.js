@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App.jsx'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 
@@ -21,11 +22,11 @@ function patients(state = [], action) {
 function visits(state = [], action) {
     if (action.type == 'FETCH_VISITS')
         return action.payload
-    // else if (action.type == 'ADD_PATIENT')
-    //     return [].concat(state, action.payload)
-    // else if (action.type == 'DELETE_PATIENT') {
-    //     return state.filter(s => s.id != action.payload)
-    // }
+    else if (action.type == 'ADD_VISIT')
+        return [].concat(state, action.payload)
+    else if (action.type == 'DELETE_VISIT') {
+        return state.filter(s => s.id != action.payload)
+    }
     else
         return state
 }
@@ -49,10 +50,44 @@ function drugs(state = [], action) {
     else return state
 }
 
-function processingPatient(state = {visitId: '', prescriptionId: ''}, action) {
-    if (action.type == 'PROCESS_PATIENT')
+function diagnosingPatient(state = { visitId: '' }, action) {
+    if (action.type == 'DIAGNOSE')
         return action.payload
     else return state
+}
+
+function orderingLabtest(state = { visitId: '' }, action) {
+    if (action.type == 'ORDER_LABTEST')
+        return action.payload
+    else return state
+}
+
+function prescribing(state = { pid: '' }, action) {
+    if (action.type == 'PRESCRIBE')
+        return action.payload
+    else return state
+}
+
+function editingVisit(state = { id: '', patient: {id: ''}, date: '', time: '', problems: ''}, action) {
+    if (action.type == 'EDIT_VISIT')
+        return action.payload
+    else
+        return state
+}
+
+function showingForm(state = 'visitForm', action) {
+    switch (action.type) {
+        case 'DIAGNOSE':
+            return 'diagnoseForm'
+        case 'EDIT_VISIT': 
+            return 'visitForm'
+        case 'ORDER_LABTEST':
+            return 'labtestForm'
+        case 'PRESCRIBE':
+            return 'prescribeForm'
+        default:
+            return state
+    }
 }
 
 function editedPatient(state = { id: '', name: '', dateOfBirth: '', gender: '', address: '' }, action) {
@@ -72,13 +107,13 @@ function authenticate(state = { loggedin: false }, action) {
 var centralState = combineReducers({
     patients, editedPatient, authenticate,
     visits, icds, medicalServices, drugs,
-    processingPatient
+    diagnosingPatient, orderingLabtest, editingVisit, prescribing,
+    showingForm
 })
 
-var store = createStore(centralState, applyMiddleware(thunk))
-
-
-
+var store = createStore(centralState, composeWithDevTools(
+    applyMiddleware(thunk)
+))
 ReactDOM.render(
     <Provider store={store}>
         <App />

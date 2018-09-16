@@ -4,7 +4,7 @@ export default class PrescribeForm extends React.Component {
     constructor(props) {
         super()
         this.state = {
-            prescription: { id: props.processingPatient.prescriptionId },
+            prescription: { id: props.prescribing.pid },
             drug: { id: '' },
             quantity: '',
             dose: '',
