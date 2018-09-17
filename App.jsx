@@ -14,6 +14,7 @@ import DiagnoseForm from './DiagnoseForm.jsx'
 import LabtestForm from './LabtestForm.jsx'
 import VisitForm from './VisitForm.jsx';
 import PrescribeForm from './PrescribeForm.jsx'
+import Reports from './Reports.jsx'
 
 class App extends React.Component {
 
@@ -61,27 +62,35 @@ class App extends React.Component {
     }
 
     render() {
-
         return (
-            <div>
+            <div style={body}>
                 <div className="jumbotron">
-                    <h1>React/Redux project</h1>
-                    <p>It is hard but really cool!</p>
+                        <h1>ClinicMana3</h1>
+                        <p>🏥 Clinic Management System 🏥</p>
                 </div>
                 <Router>
                     {this.props.authenticate.loggedin == true ?
                         <div>
-                            <ul>
-                                <li><Link to={'/About'}>About</Link></li>
-                                <li><Link to={'/Hello'}>Hello</Link></li>
-                                <li><Link to={'/Patients'}>Patients</Link></li>
-                                <li><Link to={'/Visits'}>Visits</Link></li>
-                                <li><a href='#' onClick={this.logout.bind(this)}>Logout</a></li>
-                            </ul>
-
+                            <nav class="navbar navbar-inverse navbar-fixed-top">
+                                <div class="container-fluid">
+                                    <div class="navbar-header">
+                                        <a class="navbar-brand" href="#">ClinicMana3</a>
+                                    </div>
+                                    <ul class="nav navbar-nav">
+                                        <li color='green'><Link to={'/About'}>About</Link></li>
+                                        <li><Link to={'/Patients'}>Patients</Link></li>
+                                        <li><Link to={'/Visits'}>Visits</Link></li>
+                                        <li><Link to={'/Reports'}>Reports</Link></li>
+                                    </ul>
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><a href="#" onClick={this.logout.bind(this)}><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </nav>
                             <Switch>
                                 <Route path='/About' component={About} />
                                 <Route path='/Hello' component={Hello} />
+                                <Route path='/Reports' component={Reports} />
                                 <Route path='/Patients' render={() =>
                                     <div className='row'>
                                         <div className='col-md-8'>
@@ -105,9 +114,9 @@ class App extends React.Component {
                                                 <SearchVisits dispatch={this.props.dispatch} />
                                                 <div>
                                                     {this.props.showingForm == 'visitForm' && <VisitForm patients={this.props.patients} dispatch={this.props.dispatch} editingVisit={this.props.editingVisit} />}
-                                                    {this.props.showingForm == 'diagnoseForm' &&  <DiagnoseForm dispatch={this.props.dispatch} icds={this.props.icds} diagnosingPatient={this.props.diagnosingPatient} />}
-                                                    {this.props.showingForm == 'labtestForm' && <LabtestForm dispatch={this.props.dispatch} medicalServices={this.props.medicalServices} orderingLabtest={this.props.orderingLabtest}/>}
-                                                    {this.props.showingForm == 'prescribeForm' && <PrescribeForm dispatch={this.props.dispatch} drugs={this.props.drugs} prescribing={this.props.prescribing}/>}
+                                                    {this.props.showingForm == 'diagnoseForm' && <DiagnoseForm dispatch={this.props.dispatch} icds={this.props.icds} diagnosingPatient={this.props.diagnosingPatient} />}
+                                                    {this.props.showingForm == 'labtestForm' && <LabtestForm dispatch={this.props.dispatch} medicalServices={this.props.medicalServices} orderingLabtest={this.props.orderingLabtest} />}
+                                                    {this.props.showingForm == 'prescribeForm' && <PrescribeForm dispatch={this.props.dispatch} drugs={this.props.drugs} prescribing={this.props.prescribing} />}
 
                                                 </div>
                                             </div>
@@ -144,9 +153,11 @@ function mapStateToProps(centralState) {
         orderingLabtest: centralState.orderingLabtest,
         prescribing: centralState.prescribing,
         editingVisit: centralState.editingVisit,
-        showingForm: centralState.showingForm    
+        showingForm: centralState.showingForm
     }
 }
 
-
+const body = {
+    paddingTop: '65px',
+}
 export default connect(mapStateToProps)(App)

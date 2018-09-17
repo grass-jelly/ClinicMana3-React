@@ -58,7 +58,7 @@ export default class Search extends React.Component {
         </button>
         return (
             <div>
-                <div className='panel panel-default'>
+                <div className='panel panel-success'>
                     <div className='panel-heading'>Search Form</div>
                     <div className='panel-body'>
                         <div className="input-group">

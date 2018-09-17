@@ -52,7 +52,7 @@ export default class PrescribeForm extends React.Component {
     render() {
         return (
             <div>
-                <div className='panel panel-default'>
+                <div className='panel panel-success'>
                     <div className='panel-heading'>Prescribe Form</div>
                     <div className='panel-body'>
                         <div className='form-group'>
@@ -78,7 +78,7 @@ export default class PrescribeForm extends React.Component {
                             <input className='form-control' type="text" name='howToUse' value={this.state.howToUse}
                                 onChange={this.handleChange.bind(this)} />
                         </div>
-                        <button className='btn btn-default' onClick={this.onPost.bind(this)}>Post</button>
+                        <button className='btn btn-success' onClick={this.onPost.bind(this)}>Post</button>
 
                     </div>
                 </div>

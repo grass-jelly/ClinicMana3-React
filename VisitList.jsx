@@ -93,10 +93,10 @@ export default class VisitList extends React.Component {
     render() {
         return (
             <div>
-                <div className='panel panel-default'>
+                <div className='panel panel-success'>
                     <div className='panel-heading'>Visit List</div>
                     <div className='panel-body'>
-                        <table className='table'>
+                        <table className='table table-striped'>
                             <thead>
                                 <tr>
                                     <th>Visit ID</th>

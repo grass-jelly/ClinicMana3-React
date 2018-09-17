@@ -44,7 +44,7 @@ export default class LabtestForm extends React.Component {
 
     render() {
         return (
-            <div className='panel panel-default'>
+            <div className='panel panel-success'>
                 <div className='panel-heading'>Labtest Order Form for VISIT #{this.state.visit.id}</div>
                 <div className='panel-body'>
                     <div className='form-group'>
@@ -55,7 +55,7 @@ export default class LabtestForm extends React.Component {
 
                         </select>
                     </div>
-                    <button className='btn btn-default' onClick={this.onSave.bind(this)}>Post</button>
+                    <button className='btn btn-success' onClick={this.onSave.bind(this)}>Post</button>
                 </div>
             </div>
         )

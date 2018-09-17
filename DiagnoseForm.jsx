@@ -46,7 +46,7 @@ export default class DiagnoseForm extends React.Component {
     render() {
         return (
             <div>
-                <div className='panel panel-warning'>
+                <div className='panel panel-success'>
                     <div className='panel-heading'>Diagnose Form for VISIT #{this.state.visit.id} </div>
                     <div className='panel-body'>
                         <div className='form-group'>
@@ -57,7 +57,7 @@ export default class DiagnoseForm extends React.Component {
 
                             </select>
                         </div>
-                        <button className='btn btn-warning' onClick={this.onDiagnose.bind(this)}>Post</button>
+                        <button className='btn btn-success' onClick={this.onDiagnose.bind(this)}>Post</button>
                     </div>
                 </div>
             </div>

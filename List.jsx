@@ -18,15 +18,15 @@ export default class List extends React.Component {
             })
     }
 
-    onDelete(id){
+    onDelete(id) {
         var access_token = localStorage.getItem('access_token')
-        if(!confirm('Do you want to delete?')) return
+        if (!confirm('Do you want to delete?')) return
         var access_token = localStorage.getItem('access_token')
-         fetch(`http://localhost:8080/patients/${id}?access_token=${access_token}`, {
-             method: 'delete'
-         })
-         .then(()=>this.props.dispatch({type: 'DELETE_PATIENT', payload: id}))
-       }
+        fetch(`http://localhost:8080/patients/${id}?access_token=${access_token}`, {
+            method: 'delete'
+        })
+            .then(() => this.props.dispatch({ type: 'DELETE_PATIENT', payload: id }))
+    }
 
     onEdit(id, name, dateOfBirth, gender, address) {
         this.props.dispatch({ type: 'EDIT_PATIENT', payload: { id: id, name: name, dateOfBirth: dateOfBirth, gender: gender, address: address } })
@@ -34,11 +34,11 @@ export default class List extends React.Component {
     render() {
         return (
             <div>
-                <div className='panel panel-default'>
+                <div className='panel panel-success'>
                     <div className='panel-heading'>Patient List</div>
                     <div className='panel-body'>
 
-                        <table className='table'>
+                        <table className='table table-striped'>
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -46,7 +46,6 @@ export default class List extends React.Component {
                                     <th>Date of Birth</th>
                                     <th>Gender</th>
                                     <th>Address</th>
-                                    <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -58,8 +57,12 @@ export default class List extends React.Component {
                                         <td>{s.dateOfBirth}</td>
                                         <td>{s.gender}</td>
                                         <td>{s.address}</td>
-                                        <td><button type="button" className="btn btn-default" onClick={this.onEdit.bind(this, s.id, s.name, s.dateOfBirth, s.gender, s.address)}>Edit</button></td>
-                                        <td><button type="button" className="btn btn-default" onClick={this.onDelete.bind(this, s.id)}>Delete</button></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" className="btn btn-default" onClick={this.onEdit.bind(this, s.id, s.name, s.dateOfBirth, s.gender, s.address)}>Edit</button>
+                                                <button type="button" className="btn btn-default" onClick={this.onDelete.bind(this, s.id)}>Delete</button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 )}
                             </tbody>

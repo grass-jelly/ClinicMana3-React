@@ -66,7 +66,7 @@ export default class Form extends React.Component {
     render() {
         return (
             <div>
-                <div className='panel panel-default'>
+                <div className='panel panel-success'>
                     <div className='panel-heading'>Patient Form</div>
                     <div className='panel-body'>
                         <div className="form-group">
@@ -111,7 +111,7 @@ export default class Form extends React.Component {
                             <input type="text" name='address'
                             value={this.state.address} className='form-control' onChange={this.handleChange.bind(this)} />
                         </div>
-                        <button className='btn btn-default' onClick={this.onSave.bind(this)}>Save</button>
+                        <button className='btn btn-success' onClick={this.onSave.bind(this)}>Save</button>
                     </div>
                 </div>
             </div>

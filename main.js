@@ -5,7 +5,6 @@ import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-
 //write the first reducer:
 function patients(state = [], action) {
     if (action.type == 'FETCH_PATIENTS')
@@ -100,6 +99,8 @@ function editedPatient(state = { id: '', name: '', dateOfBirth: '', gender: '', 
 function authenticate(state = { loggedin: false }, action) {
     if (action.type == 'AUTHENTICATED')
         return { loggedin: true, access_token: action.payload }
+    else if (action.type == 'LOGOUT')
+        return { loggedin: false }
     return state
 }
 
