@@ -27,7 +27,7 @@ export default class LabtestForm extends React.Component {
         }
         this.setState({ ordered: true })
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/labTests?access_token=${access_token}`, {
+        fetch(`https://clinicmana3.herokuapp.com/labTests?access_token=${access_token}`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

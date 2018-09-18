@@ -8,7 +8,7 @@ export default class List extends React.Component {
 
     componentDidMount() {
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/patients/?access_token=${access_token}`)
+        fetch(`https://clinicmana3.herokuapp.com/patients/?access_token=${access_token}`)
             .catch(err => {
                 console.log(err)
             })
@@ -22,7 +22,7 @@ export default class List extends React.Component {
         var access_token = localStorage.getItem('access_token')
         if (!confirm('Do you want to delete?')) return
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/patients/${id}?access_token=${access_token}`, {
+        fetch(`https://clinicmana3.herokuapp.com/patients/${id}?access_token=${access_token}`, {
             method: 'delete'
         })
             .then(() => this.props.dispatch({ type: 'DELETE_PATIENT', payload: id }))

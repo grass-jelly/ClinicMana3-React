@@ -10,7 +10,7 @@ export default class Login extends React.Component {
     login() {
         //use fetch to send username/password to API
         //if it is true
-        fetch(`http://localhost:8080/oauth/token?grant_type=password&username=${this.state.username}&password=${this.state.password}`,
+        fetch(`https://clinicmana3.herokuapp.com/oauth/token?grant_type=password&username=${this.state.username}&password=${this.state.password}`,
             {
                 headers: {
                     'Content-Type': 'application/json',

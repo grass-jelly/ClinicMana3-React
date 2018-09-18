@@ -6,10 +6,10 @@ export default class Reports extends React.Component {
     }
     componentDidMount() {
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/visitsCountPerDay/?access_token=${access_token}`)
+        fetch(`https://clinicmana3.herokuapp.com/visitsCountPerDay/?access_token=${access_token}`)
             .then(res => res.json())
             .then(vcs => this.setState({vcs}))
-        fetch(`http://localhost:8080/drugCounts/?access_token=${access_token}`)
+        fetch(`https://clinicmana3.herokuapp.com/drugCounts/?access_token=${access_token}`)
             .then(res => res.json())
             .then(dcs => this.setState({dcs}))
     }

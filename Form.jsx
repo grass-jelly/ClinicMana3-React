@@ -24,7 +24,7 @@ export default class Form extends React.Component {
     onSave() {
         var access_token = localStorage.getItem('access_token')
         if (this.state.id === '') {
-            fetch(`http://localhost:8080/patients?access_token=${access_token}`, {
+            fetch(`https://clinicmana3.herokuapp.com/patients?access_token=${access_token}`, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export default class Form extends React.Component {
                 })
         }
         else {
-            fetch(`http://localhost:8080/patients?access_token=${access_token}`, {
+            fetch(`https://clinicmana3.herokuapp.com/patients?access_token=${access_token}`, {
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
                     'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ export default class Form extends React.Component {
             })
                 .then(() => {
                     this.props.dispatch({ type: 'EDIT_PATIENT', payload: { id: '', name: '', dateOfBirth: '', gender: '', address: '' } })
-                    fetch(`http://localhost:8080/patients?access_token=${access_token}`)
+                    fetch(`https://clinicmana3.herokuapp.com/patients?access_token=${access_token}`)
                         .catch(err => {
                             console.log(err)
                         })

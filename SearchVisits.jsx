@@ -13,7 +13,7 @@ export default class SearchVisits extends React.Component {
 
     onClear() {
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/visits?access_token=${access_token}`)
+        fetch(`https://clinicmana3.herokuapp.com/visits?access_token=${access_token}`)
             .then(res => res.json())
             .then(visits => {
                 this.props.dispatch({ type: 'FETCH_VISITS', payload: visits })
@@ -26,14 +26,14 @@ export default class SearchVisits extends React.Component {
         if (this.state.patient != '') {
             this.setState({ searchingPatient: true })
 
-            fetch(`http://localhost:8080/visitsByPatient?patientId=${this.state.patient}&access_token=${access_token}`)
+            fetch(`https://clinicmana3.herokuapp.com/visitsByPatient?patientId=${this.state.patient}&access_token=${access_token}`)
                 .then(res => res.json())
                 .then(visits => {
                     this.props.dispatch({ type: 'FETCH_VISITS', payload: visits })
                 })
         } else if (this.state.date != '') {
             this.setState({ searchingDate: true })
-            fetch(`http://localhost:8080/visitsByDay?date=${this.state.date}&access_token=${access_token}`)
+            fetch(`https://clinicmana3.herokuapp.com/visitsByDay?date=${this.state.date}&access_token=${access_token}`)
                 .then(res => res.json())
                 .then(visits => {
                     this.props.dispatch({ type: 'FETCH_VISITS', payload: visits })

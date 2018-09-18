@@ -36,7 +36,7 @@ export default class PrescribeForm extends React.Component {
             return
         }
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/drugInfos?access_token=${access_token}`, {
+        fetch(`https://clinicmana3.herokuapp.com/drugInfos?access_token=${access_token}`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

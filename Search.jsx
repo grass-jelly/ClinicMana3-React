@@ -13,7 +13,7 @@ export default class Search extends React.Component {
 
     onClear() {
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/patients?access_token=${access_token}`)
+        fetch(`https://clinicmana3.herokuapp.com/patients?access_token=${access_token}`)
             .catch(err => {
                 console.log(err)
             })
@@ -29,7 +29,7 @@ export default class Search extends React.Component {
         if (this.state.name !== '') {
             this.setState({ searchingName: true })
 
-            fetch(`http://localhost:8080/patientsByName?name=${this.state.name}&access_token=${access_token}`)
+            fetch(`https://clinicmana3.herokuapp.com/patientsByName?name=${this.state.name}&access_token=${access_token}`)
                 .catch(err => {
                     console.log(err)
                 })
@@ -39,7 +39,7 @@ export default class Search extends React.Component {
                 })
         } else if (this.state.dateOfBirth !== '') {
             this.setState({ searchingDob: true })
-            fetch(`http://localhost:8080/patientsByDOB?dob=${this.state.dateOfBirth}&access_token=${access_token}`)
+            fetch(`https://clinicmana3.herokuapp.com/patientsByDOB?dob=${this.state.dateOfBirth}&access_token=${access_token}`)
                 .catch(err => {
                     console.log(err)
                 })

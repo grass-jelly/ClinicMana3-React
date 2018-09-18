@@ -5,7 +5,6 @@ import VisitList from './VisitList.jsx'
 import Search from './Search.jsx'
 import SearchVisits from './SearchVisits.jsx'
 import Form from './Form.jsx'
-import Hello from './Hello.jsx'
 import About from './About.jsx'
 import { browserHistory } from 'react-router'
 import { BrowserRouter as Router, Switch, Link, Route } from 'react-router-dom'
@@ -24,7 +23,7 @@ class App extends React.Component {
 
     fetchIcds() {
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/icds/?access_token=${access_token}`)
+        fetch(`https://clinicmana3.herokuapp.com/icds/?access_token=${access_token}`)
             .catch(err => {
                 console.log(err)
             })
@@ -36,7 +35,7 @@ class App extends React.Component {
 
     fetchMedicalServices() {
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/medicalServices/?access_token=${access_token}`)
+        fetch(`https://clinicmana3.herokuapp.com/medicalServices/?access_token=${access_token}`)
             .catch(err => {
                 console.log(err)
             })
@@ -48,7 +47,7 @@ class App extends React.Component {
 
     fetchDrugs() {
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/drugs/?access_token=${access_token}`)
+        fetch(`https://clinicmana3.herokuapp.com/drugs/?access_token=${access_token}`)
             .then(res => res.json())
             .then(drugs => {
                 this.props.dispatch({ type: 'FETCH_DRUGS', payload: drugs })
@@ -65,31 +64,38 @@ class App extends React.Component {
         return (
             <div style={body}>
                 <div className="jumbotron">
-                        <h1>ClinicMana3</h1>
-                        <p>🏥 Clinic Management System 🏥</p>
+                    <h1>ClinicMana3</h1>
+                    <p>🏥 Clinic Management System 🏥</p>
                 </div>
                 <Router>
                     {this.props.authenticate.loggedin == true ?
-                        <div>
-                            <nav class="navbar navbar-inverse navbar-fixed-top">
-                                <div class="container-fluid">
-                                    <div class="navbar-header">
-                                        <a class="navbar-brand" href="#">ClinicMana3</a>
+                        <div>`
+                            <nav className="navbar navbar-inverse navbar-fixed-top">
+                                <div className="container-fluid">
+                                    <div className="navbar-header">
+                                        <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                            <span className="icon-bar"></span>
+                                            <span className="icon-bar"></span>
+                                            <span className="icon-bar"></span>
+                                        </button>
+                                        <a className="navbar-brand" href="#">ClinicMana3</a>
                                     </div>
-                                    <ul class="nav navbar-nav">
-                                        <li color='green'><Link to={'/About'}>About</Link></li>
-                                        <li><Link to={'/Patients'}>Patients</Link></li>
-                                        <li><Link to={'/Visits'}>Visits</Link></li>
-                                        <li><Link to={'/Reports'}>Reports</Link></li>
-                                    </ul>
-                                    <ul class="nav navbar-nav navbar-right">
-                                        <li><a href="#" onClick={this.logout.bind(this)}><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                                    </ul>
+                                    <div className="collapse navbar-collapse" id="myNavbar">
+                                        <ul className="nav navbar-nav">
+                                            <li color='green'><Link to={'/About'}>About</Link></li>
+                                            <li><Link to={'/Patients'}>Patients</Link></li>
+                                            <li><Link to={'/Visits'}>Visits</Link></li>
+                                            <li><Link to={'/Reports'}>Reports</Link></li>
+                                        </ul>
+                                        <ul className="nav navbar-nav navbar-right">
+                                            <li><a href="#" onClick={this.logout.bind(this)}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                                        </ul>
+                                    </div>
+
                                 </div>
                             </nav>
                             <Switch>
                                 <Route path='/About' component={About} />
-                                <Route path='/Hello' component={Hello} />
                                 <Route path='/Reports' component={Reports} />
                                 <Route path='/Patients' render={() =>
                                     <div className='row'>

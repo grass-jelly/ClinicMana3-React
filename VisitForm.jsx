@@ -28,7 +28,7 @@ export default class VisitForm extends React.Component {
                 alert('Please select a patient')
                 return
             }
-            fetch(`http://localhost:8080/visits?access_token=${access_token}`, {
+            fetch(`https://clinicmana3.herokuapp.com/visits?access_token=${access_token}`, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -37,13 +37,13 @@ export default class VisitForm extends React.Component {
                 body: JSON.stringify({patient: {id: this.state.patient}, problems: this.state.problems })
             })
                 .then(() => {
-                    fetch(`http://localhost:8080/visits?access_token=${access_token}`)
+                    fetch(`https://clinicmana3.herokuapp.com/visits?access_token=${access_token}`)
                         .then(res => res.json())
                         .then(visits => this.props.dispatch({ type: 'FETCH_VISITS', payload: visits }))
                 })
         }
         else {
-            fetch(`http://localhost:8080/visits?access_token=${access_token}`, {
+            fetch(`https://clinicmana3.herokuapp.com/visits?access_token=${access_token}`, {
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
                     'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ export default class VisitForm extends React.Component {
                         type: 'EDIT_VISIT', 
                         payload: { id: '', patient: {id: ''}, date: '', time: '', problems: ''} 
                     })
-                    fetch(`http://localhost:8080/visits?access_token=${access_token}`)
+                    fetch(`https://clinicmana3.herokuapp.com/visits?access_token=${access_token}`)
                         .then(res => res.json())
                         .then(visits => this.props.dispatch({ type: 'FETCH_VISITS', payload: visits }))
                 })

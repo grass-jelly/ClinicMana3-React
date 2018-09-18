@@ -5,12 +5,12 @@ export default class VisitList extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = { visit: {id: ''}, value: 'select' }
+        this.state = { visit: { id: '' }, value: 'select' }
     }
 
     componentDidMount() {
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/visits/?access_token=${access_token}`)
+        fetch(`https://clinicmana3.herokuapp.com/visits/?access_token=${access_token}`)
             .catch(err => {
                 console.log(err)
             })
@@ -22,12 +22,16 @@ export default class VisitList extends React.Component {
 
     handleVisit(s, e) {
         this.setState({
-            visit: s,  
+            visit: s,
             value: 'select'
         })
     }
 
     handleChange(e) {
+        if (e.target.value == 'add') {
+            this.setState({ value: 'add', visit: {id: ''} }, () => { this.onAdd.bind(this)() })
+            return
+        }
         if (this.state.visit.id == '') {
             alert('Please select a visit')
             return
@@ -42,14 +46,21 @@ export default class VisitList extends React.Component {
         })
     }
 
+    onAdd() {
+        this.props.dispatch({
+            type: 'EDIT_VISIT',
+            payload: { id: '', patient: { id: '' }, date: '', time: '', problems: '' }
+        })
+    }
+
     onDelete() {
         var access_token = localStorage.getItem('access_token')
-        if(!confirm('Do you want to delete?')) return
+        if (!confirm('Do you want to delete?')) return
         var access_token = localStorage.getItem('access_token')
-         fetch(`http://localhost:8080/visits/${this.state.visit.id}?access_token=${access_token}`, {
-             method: 'delete'
-         })
-         .then(()=>this.props.dispatch({type: 'DELETE_VISIT', payload: this.state.visit.id}))
+        fetch(`https://clinicmana3.herokuapp.com/visits/${this.state.visit.id}?access_token=${access_token}`, {
+            method: 'delete'
+        })
+            .then(() => this.props.dispatch({ type: 'DELETE_VISIT', payload: this.state.visit.id }))
     }
 
     onEdit() {
@@ -76,7 +87,7 @@ export default class VisitList extends React.Component {
 
     onPrescribe() {
         var access_token = localStorage.getItem('access_token')
-        fetch(`http://localhost:8080/prescriptions?access_token=${access_token}`, {
+        fetch(`https://clinicmana3.herokuapp.com/prescriptions?access_token=${access_token}`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -105,10 +116,11 @@ export default class VisitList extends React.Component {
                                     <th>Time</th>
                                     <th>Problems</th>
                                     <th>
-                                        <select className="form-control" 
-                                        onChange={this.handleChange.bind(this)} 
-                                        value={this.state.value}>
+                                        <select className="form-control"
+                                            onChange={this.handleChange.bind(this)}
+                                            value={this.state.value}>
                                             <option value="select">Select</option>
+                                            <option value="add">Add</option>
                                             <option value="diagnose">Diagnose</option>
                                             <option value="orderLabtest">Order Labtest</option>
                                             <option value="prescribe">Prescribe</option>
@@ -127,13 +139,13 @@ export default class VisitList extends React.Component {
                                         <td>{s.time}</td>
                                         <td>{s.problems}</td>
                                         <td>
-                                                    <input
-                                                        type="radio"
-                                                        name="visit"
-                                                        onChange={this.handleVisit.bind(this, s)}
-                                                        value={s.id}
-                                                        checked={this.state.visit.id === s.id}
-                                                    />
+                                            <input
+                                                type="radio"
+                                                name="visit"
+                                                onChange={this.handleVisit.bind(this, s)}
+                                                value={s.id}
+                                                checked={this.state.visit.id === s.id}
+                                            />
                                         </td>
                                     </tr>
                                 }
