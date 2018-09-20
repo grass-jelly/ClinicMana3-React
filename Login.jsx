@@ -32,8 +32,24 @@ export default class Login extends React.Component {
             }).catch(error => {
                 this.setState({ message: 'Remote server is not accessible' })
             })
-
+        let access_token = localStorage.getItem('access_token')
+        fetch(`https://clinicmana3.herokuapp.com/icds/?access_token=${access_token}`)
+            .then(res => res.json())
+            .then(icds => {
+                this.props.dispatch({ type: 'FETCH_ICDS', payload: icds })
+            })
+        fetch(`https://clinicmana3.herokuapp.com/medicalServices/?access_token=${access_token}`)
+            .then(res => res.json())
+            .then(mss => {
+                this.props.dispatch({ type: 'FETCH_MSS', payload: mss })
+            })
+        fetch(`https://clinicmana3.herokuapp.com/drugs/?access_token=${access_token}`)
+            .then(res => res.json())
+            .then(drugs => {
+                this.props.dispatch({ type: 'FETCH_DRUGS', payload: drugs })
+            })
     }
+
     handleChange(e) {
         var change = {}
         change[e.target.name] = e.target.value
@@ -50,13 +66,13 @@ export default class Login extends React.Component {
                             autoFocus
                             type="text"
                             name="username"
-                            onChange={this.handleChange.bind(this)} 
+                            onChange={this.handleChange.bind(this)}
                         />
                     </FormGroup>
                     <FormGroup controlId="password" bsSize="large">
                         <ControlLabel>Password</ControlLabel>
                         <FormControl
-                            onChange={this.handleChange.bind(this)} 
+                            onChange={this.handleChange.bind(this)}
                             type="password"
                             name="password"
                         />
@@ -69,6 +85,7 @@ export default class Login extends React.Component {
                         Login
                     </Button>
                 </form>
+                <div>{this.state.message}</div>
             </div>
         )
     }

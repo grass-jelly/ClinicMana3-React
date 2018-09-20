@@ -21,45 +21,6 @@ class App extends React.Component {
         this.props.dispatch({ type: 'LOGOUT' })
     }
 
-    fetchIcds() {
-        var access_token = localStorage.getItem('access_token')
-        fetch(`https://clinicmana3.herokuapp.com/icds/?access_token=${access_token}`)
-            .catch(err => {
-                console.log(err)
-            })
-            .then(res => res.json())
-            .then(icds => {
-                this.props.dispatch({ type: 'FETCH_ICDS', payload: icds })
-            })
-    }
-
-    fetchMedicalServices() {
-        var access_token = localStorage.getItem('access_token')
-        fetch(`https://clinicmana3.herokuapp.com/medicalServices/?access_token=${access_token}`)
-            .catch(err => {
-                console.log(err)
-            })
-            .then(res => res.json())
-            .then(mss => {
-                this.props.dispatch({ type: 'FETCH_MSS', payload: mss })
-            })
-    }
-
-    fetchDrugs() {
-        var access_token = localStorage.getItem('access_token')
-        fetch(`https://clinicmana3.herokuapp.com/drugs/?access_token=${access_token}`)
-            .then(res => res.json())
-            .then(drugs => {
-                this.props.dispatch({ type: 'FETCH_DRUGS', payload: drugs })
-            })
-    }
-
-    componentDidMount() {
-        this.fetchIcds.bind(this)()
-        this.fetchMedicalServices.bind(this)()
-        this.fetchDrugs.bind(this)()
-    }
-
     render() {
         return (
             <div style={body}>

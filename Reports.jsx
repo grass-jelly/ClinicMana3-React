@@ -48,7 +48,7 @@ export default class Reports extends React.Component {
                         <thead>
                             <tr>
                                 <th>Drug</th>
-                                <th>Count</th>
+                                <th>Times prescribed</th>
                             </tr>
                         </thead>
                         <tbody>
