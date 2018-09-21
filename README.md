@@ -1,2 +1,2 @@
-How to make OAuth2 access using ReactJS
-We use localStorage to store the token
+# ClinicMana3
+Backend: https://github.com/grass-jelly/ClinicMana3 
