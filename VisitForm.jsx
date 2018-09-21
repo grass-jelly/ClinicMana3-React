@@ -34,7 +34,7 @@ export default class VisitForm extends React.Component {
                     'Content-Type': 'application/json'
                 },
                 method: 'post',
-                body: JSON.stringify({patient: {id: this.state.patient}, problems: this.state.problems })
+                body: JSON.stringify({ patient: { id: this.state.patient }, problems: this.state.problems })
             })
                 .then(() => {
                     fetch(`https://clinicmana3.herokuapp.com/visits?access_token=${access_token}`)
@@ -49,12 +49,12 @@ export default class VisitForm extends React.Component {
                     'Content-Type': 'application/json'
                 },
                 method: 'put',
-                body: JSON.stringify({ id: this.state.id, patient: {id: this.state.patient}, date: this.state.date, time: this.state.time, problems: this.state.problems })
+                body: JSON.stringify({ id: this.state.id, patient: { id: this.state.patient }, date: this.state.date, time: this.state.time, problems: this.state.problems })
             })
                 .then(() => {
-                    this.props.dispatch({ 
-                        type: 'EDIT_VISIT', 
-                        payload: { id: '', patient: {id: ''}, date: '', time: '', problems: ''} 
+                    this.props.dispatch({
+                        type: 'EDIT_VISIT',
+                        payload: { id: '', patient: { id: '' }, date: '', time: '', problems: '' }
                     })
                     fetch(`https://clinicmana3.herokuapp.com/visits?access_token=${access_token}`)
                         .then(res => res.json())
@@ -72,11 +72,16 @@ export default class VisitForm extends React.Component {
                     <div className='panel-body'>
                         <div className="form-group">
                             <label>Patient</label>
-                            <select className="form-control" name='patient' value={this.state.patient} onChange={this.handleChange.bind(this)}>
-                                <option value="select">Select</option>
-                                {this.props.patients.map(s =>
-                                    <option key={s.id} value={s.id}>{s.id} {s.name}</option>)}
-                            </select>
+                            {!this.props.patients.length ?
+                                <div>Please wait. Fetching patients...</div>
+                                :
+                                <select className="form-control" name='patient' value={this.state.patient} onChange={this.handleChange.bind(this)}>
+                                    <option value="select">Select</option>
+                                    {this.props.patients.map(s =>
+                                        <option key={s.id} value={s.id}>{s.id} {s.name}</option>)}
+                                </select>
+                            }
+
                         </div>
                         <div className="form-group">
                             <label>Date</label>
@@ -97,7 +102,7 @@ export default class VisitForm extends React.Component {
                     </div>
                 </div>
             </div>
-                )
-            }
-        
+        )
+    }
+
 }

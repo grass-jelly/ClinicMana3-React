@@ -135,7 +135,10 @@ export default class VisitList extends React.Component {
                    
                     </div>
                     <div className='panel-body'>
-                        <table className='table table-striped'>
+                    {!this.props.visits.length ? 
+                    <div>Please wait. Fetching visits...</div>    
+                    :
+                    <table className='table table-striped'>
                             <thead>
                                 <tr>
                                     <th>Visit ID</th>
@@ -179,7 +182,8 @@ export default class VisitList extends React.Component {
                                 }
                                 )}
                             </tbody>
-                        </table>
+                    </table>
+                    }    
                     </div>
                 </div>
             </div>

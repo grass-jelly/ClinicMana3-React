@@ -37,7 +37,9 @@ export default class List extends React.Component {
                 <div className='panel panel-success'>
                     <div className='panel-heading'>Patient List</div>
                     <div className='panel-body'>
-
+                    {!this.props.patients.length ?
+                                <div>Please wait. Fetching patients...</div>
+                                :
                         <table className='table table-striped'>
                             <thead>
                                 <tr>
@@ -67,6 +69,7 @@ export default class List extends React.Component {
                                 )}
                             </tbody>
                         </table>
+                    }
                     </div>
                 </div>
             </div>

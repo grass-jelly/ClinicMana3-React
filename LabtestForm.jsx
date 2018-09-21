@@ -49,11 +49,16 @@ export default class LabtestForm extends React.Component {
                 <div className='panel-body'>
                     <div className='form-group'>
                         <label>Mutiple select list (hold shift to select more than one):</label>
+                        {!this.props.medicalServices.length ?
+                        <div>Please wait. Fetching medical services...</div>
+                        :
                         <select multiple className="form-control" onChange={this.handleChange.bind(this)}>
                             {this.props.medicalServices.map(s =>
                                 <option key={s.id} value={s.id}>{s.id + " " + s.name}</option>)}
 
                         </select>
+                    }
+                        
                     </div>
                     <button className='btn btn-success' onClick={this.onSave.bind(this)}>Post</button>
                 </div>
