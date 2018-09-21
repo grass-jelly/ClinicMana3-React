@@ -51,11 +51,14 @@ export default class DiagnoseForm extends React.Component {
                     <div className='panel-body'>
                         <div className='form-group'>
                             <label>Mutiple select list (hold shift to select more than one):</label>
+                            {!this.props.icds.length ? 
+                            <div>Please wait. Fetching icd list...</div>
+                            :
                             <select multiple className="form-control" onChange={this.handleDiagnose.bind(this)}>
-                                {this.props.icds.map(s =>
+                                    {this.props.icds.map(s =>
                                     <option key={s.id} value={s.id}>{s.diseaseCode + " " + s.diseaseName}</option>)}
-
                             </select>
+                            }
                         </div>
                         <button className='btn btn-success' onClick={this.onDiagnose.bind(this)}>Post</button>
                     </div>

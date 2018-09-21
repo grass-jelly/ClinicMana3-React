@@ -49,12 +49,22 @@ export default class PrescribeForm extends React.Component {
         \nDrug ID: ${d.drug.id}\nQuantity: ${d.quantity}\nDose: ${d.dose}\nHow To Use: ${d.howToUse}`))
     }
 
+    onFetchDrugs() {
+        fetch(`https://clinicmana3.herokuapp.com/drugs/?access_token=${localStorage.getItem('access_token')}`)
+                .then(res => res.json())
+                .then(drugs => {
+                    this.props.dispatch({ type: 'FETCH_DRUGS', payload: drugs })
+                })
+    }
+
+
     render() {
         return (
             <div>
                 <div className='panel panel-success'>
                     <div className='panel-heading'>Prescribe Form</div>
                     <div className='panel-body'>
+                        <button className='btn btn-default' onClick={this.onFetchDrugs.bind(this)}>Fetch Drugs</button>
                         <div className='form-group'>
                             <label htmlFor="drug">Drug</label>
                             <select className='form-control' name="drug" onChange={this.handleDrug.bind(this)} id='drug'>

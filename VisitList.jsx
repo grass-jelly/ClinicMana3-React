@@ -10,6 +10,14 @@ export default class VisitList extends React.Component {
 
     componentDidMount() {
         var access_token = localStorage.getItem('access_token')
+        fetch(`https://clinicmana3.herokuapp.com/patients/?access_token=${access_token}`)
+            .catch(err => {
+                console.log(err)
+            })
+            .then(res => res.json())
+            .then(patients => {
+                this.props.dispatch({ type: 'FETCH_PATIENTS', payload: patients })
+            })
         fetch(`https://clinicmana3.herokuapp.com/visits/?access_token=${access_token}`)
             .catch(err => {
                 console.log(err)
@@ -17,6 +25,22 @@ export default class VisitList extends React.Component {
             .then(res => res.json())
             .then(visits => {
                 this.props.dispatch({ type: 'FETCH_VISITS', payload: visits })
+            })
+        
+        fetch(`https://clinicmana3.herokuapp.com/icds/?access_token=${access_token}`)
+            .then(res => res.json())
+            .then(icds => {
+                this.props.dispatch({ type: 'FETCH_ICDS', payload: icds })
+            })
+        fetch(`https://clinicmana3.herokuapp.com/medicalServices/?access_token=${access_token}`)
+            .then(res => res.json())
+            .then(mss => {
+                this.props.dispatch({ type: 'FETCH_MSS', payload: mss })
+            })
+        fetch(`https://clinicmana3.herokuapp.com/drugs/?access_token=${access_token}`)
+            .then(res => res.json())
+            .then(drugs => {
+                this.props.dispatch({ type: 'FETCH_DRUGS', payload: drugs })
             })
     }
 
@@ -101,11 +125,15 @@ export default class VisitList extends React.Component {
             })
     }
 
+    
     render() {
         return (
             <div>
                 <div className='panel panel-success'>
-                    <div className='panel-heading'>Visit List</div>
+                    <div className='panel-heading'>
+                    Visit List
+                   
+                    </div>
                     <div className='panel-body'>
                         <table className='table table-striped'>
                             <thead>
